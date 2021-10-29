@@ -15,7 +15,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const Main=()=>{
   const theme=useTheme();
-  const [showSlider,setShowSlider]=useState(false);
+  const [showSlider,setShowSlider]=useState(true);
   const [respond,setRespond]=useState({
     rate:0,comment:false,share:0
 })
@@ -100,7 +100,7 @@ const sharePress=()=>{
     <Common.slider
     show={showSlider}
     onClosed={()=>setShowSlider(!showSlider)}
-    rateChange={(value)=>onSlide(value)}
+    //rateChange={(value)=>onSlide(value)}
     />
   
   

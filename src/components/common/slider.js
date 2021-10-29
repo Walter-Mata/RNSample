@@ -21,6 +21,8 @@ const slider = ({
     onClosed,
     rateChange
 }) => {
+
+  
  const theme=useTheme();
   return (
   
