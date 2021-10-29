@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import {ImageBackground,TouchableOpacity,Dimensions,View,StyleSheet, Text, Image} from 'react-native';
+import {ImageBackground,TouchableOpacity,Dimensions,TextInput,View,StyleSheet, Text, Image} from 'react-native';
 import { Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Foundation';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const post=({  
+    data,
     onRatePress,
+    onRateLongPress,
     onCommentPress,
-    onSharePress})=>{
+    onSharePress
+})=>{
 
-        const [respond,setRespond]=useState({
-            rate:0,comment:false,share:0
-        })
     return(
     <React.Fragment>
         <View style={{flex:1}}>
@@ -30,8 +30,9 @@ const post=({
 
                  <View style={styles.postBody}>
               
-                <View style={{flex:1}}>
+                <View>
                          <Text style={styles.postBody_text}>
+
                             {`Far concluded not his something extermity. Want four we face an he gate. On he of played he...`}                 
                             </Text>
                             <Text style={styles.postBody_text}>{`more`}</Text>
@@ -63,12 +64,12 @@ const post=({
                                                             t
                                                             color="#900" />
                                                         
-                                                            <Text style={{marginLeft:10}}>120</Text>
+                                                            <Text style={{marginLeft:10}}>{data.rate}</Text>
 
                                                             </View>
                                                             <View style={styles.responseContainer_item}>
 
-                                                            <Text>15 shares</Text>
+                                                            <Text>{`${data.share} shares`}</Text>
                                                             </View>
                                                     </View>
 
@@ -79,8 +80,10 @@ const post=({
                                                       
                                                       
                                                       
-                                                      <TouchableOpacity style={
-                                                          styles.responseContainer_item}>
+                                                      <TouchableOpacity 
+                                                      onPress={onRatePress}
+                                                      onLongPress={onRateLongPress}
+                                                      style={styles.responseContainer_item}>
                                                         
                                                          
                                                           <Icon name="heart" size={30} color="#900" />
@@ -88,7 +91,9 @@ const post=({
                                                           <Text style={{marginLeft:10}}>Rate</Text>
 
                                                           </TouchableOpacity>
-                                                          <TouchableOpacity style={styles.responseContainer_item}>
+                                                          <TouchableOpacity 
+                                                           onPress={onCommentPress}
+                                                          style={styles.responseContainer_item}>
                                                         
                                                         <Icon name="comment" size={30} color="#000" />
                                                     
@@ -96,7 +101,9 @@ const post=({
 
                                                         </TouchableOpacity>
 
-                                                        <TouchableOpacity style={styles.responseContainer_item}>
+                                                        <TouchableOpacity 
+                                                        onPress={onSharePress}
+                                                        style={styles.responseContainer_item}>
                                                         
                                                         <Icon name="share" size={30} color="#000" />
                                                     
@@ -109,27 +116,68 @@ const post=({
                                                         
                                                             <Text>Comments</Text>
 
+                                                            <View style={styles.commentBody}>
 
-
-                                                            <View style={{flex:1,marginTop:10}}>
                                                             <View style={styles.postHeader_item}>
                                                             <Avatar.Image size={70} source={require('../../assets/images/avatar_2.jpg')} />
+                                                       
+                                                              
                                                                 </View>
+                                                                <View style={[styles.postHeader_item ,{
+                                                                    marginLeft:10,
+                                                                    width:(70/100)*DEVICE_WIDTH,
+                                                                    borderRadius:10,
+                                                                    backgroundColor:'#d3d3d3'}]}>
+                                                                    <Text style={styles.name}>Carla Sposito</Text>
+                                                                    
+                                                                    <Text style={[styles.postBody_text,{
+                                                                        paddingLeft:0,paddingRight:0
+                                                                    }]}>
+                                                                    {`Far concluded not his something extermity. Want four we face an he gate. On he of played he...`}        
 
-                                                                <View style={styles.postHeader_item}>
-                                                                    <Text style={styles.name}>andrezahilton</Text>
-                                                                    <Text style={styles.onlineIndicator}>6 min ago</Text>
+                                                                    </Text>
+                                                                 
+                                                                   
 
                                                                 </View>
+                                                             
                                                             </View>
                                                    
 
                                                             </View>
                                                
 
-                                                    
+
+                             <View style={{position:'absolute',
+                                 height:100,
+                                 paddingLeft:10,
+                                marginTop:(65/100)*DEVICE_HEIGHT,
+                                width:DEVICE_WIDTH}}>
+                               
+                               <View style={styles.commentBody}>
+
+                                <View style={styles.postHeader_item}>
+                                <Avatar.Image size={70} source={require('../../assets/images/avatar_2.jpg')} />
+
+                                
+                                    </View>
+
+                                    <View style={styles.postHeader_item}>
+                                        <TextInput
+                                        style={styles.input}
+                                        placeholder="Add a comment"/>
+                                
+                                    </View>
+                                            </View>
+                            </View>                         
 
                  </View>
+             
+             
+           
+             
+             
+                                                                    
                  </View>
     </React.Fragment>
     )
@@ -186,9 +234,26 @@ const styles=StyleSheet.create({
                         justifyContent:'flex-start'
                         
                 },
+
+                commentBody:{
+                    flexDirection:'row',
+                    justifyContent:'flex-start',
+                    width:DEVICE_WIDTH,
+                    alignItems:'center',
+                    marginTop:10
+                   // height:300,
+              
+                    },
                 
 
-
+                    input: {
+                        height: 40,
+                        margin: 12,
+                        borderWidth:1,
+                        borderRadius:20,
+                        paddingLeft: 10,
+                        width:(70/100)*DEVICE_WIDTH
+                      },
 
 })
 export default post;

@@ -8,18 +8,68 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Common from './components/common/index'
+import { useTheme } from 'react-native-paper';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 
 const Main=()=>{
-
+  const theme=useTheme();
+  const [showSlider,setShowSlider]=useState(false);
+  const [respond,setRespond]=useState({
+    rate:0,comment:false,share:0
+})
  
+const ratePress=()=>{
+
+    setRespond({
+      rate:respond.rate+1,
+      comment:respond.comment,
+      share:respond.share
+
+    })
+
+
+}
+const onRateLongPress=()=>{
+  setShowSlider(true);
+}
+const onSlide=(value)=>{
+  setRespond({
+    rate:value,
+    comment:respond.comment,
+    share:respond.share
+
+  })
+}
+const commentPress=()=>{
+
+  setRespond({
+    rate:respond.rate,
+    comment:!respond.comment,
+    share:respond.share
+
+  })
+}
+
+const sharePress=()=>{
+
+  setRespond({
+    rate:respond.rate,
+    comment:respond.comment,
+    share:respond.share+1
+
+  })
+}
+
+
   return(
+    <React.Fragment>
     <SafeAreaView>
 
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer,{
+         borderBottomColor:theme.colors.disabled
+      }]}>
        
       <View style={styles.headerContainer_item}>
         <Common.backbutton
@@ -36,11 +86,25 @@ const Main=()=>{
 
 
         <View style={styles.body}>
-        <Common.post/>
+        
+        <Common.post
+          data={respond}
+          onRatePress={ratePress}
+          onRateLongPress={onRateLongPress}
+          onCommentPress={commentPress}
+          onSharePress={sharePress}/>
 
         </View>
-
+        
     </SafeAreaView>
+    <Common.slider
+    show={showSlider}
+    onClosed={()=>setShowSlider(!showSlider)}
+    rateChange={(value)=>onSlide(value)}
+    />
+  
+  
+    </React.Fragment>
   )
 }
 const styles=StyleSheet.create({
@@ -49,7 +113,7 @@ headerContainer:{
   height:50,
   flexDirection:'row',
   justifyContent:'flex-start',
-  borderBottomColor:'#d3d3d3',
+ 
   borderBottomWidth:0.9,
   alignItems:'center'
 
